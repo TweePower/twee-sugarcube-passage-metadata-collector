@@ -1,0 +1,26 @@
+:: StoryCaption [nobr]
+
+<<if passageMetadataApp.isHasPassageMetadata()>>
+    Day: $day<br>
+    Time: $weekday / $time<br>
+    Money: $money<br>
+    <hr>
+    <<set _thoughtsAll = passageMetadataApp.getPassageMetadataValue('thoughts')>>
+    <<set _thoughtsAvailable = []>>
+    <<for _val range _thoughtsAll>>
+        <<if typeof _val.condition === 'boolean' && _val.condition === true>>
+            <<set _thoughtsAvailable.push(_val.text)>>
+        <<elseif typeof _val.condition === 'string' && Scripting.evalJavaScript(Scripting.parse(_val.condition)) === true>>
+            <<set _thoughtsAvailable.push(_val.text)>>
+        <</if>>
+    <</for>>
+
+    <<if _thoughtsAvailable.length > 0>>
+        <<set _thoughtToPrint = _thoughtsAvailable[Math.floor(Math.random() * _thoughtsAvailable.length)]>>
+    <<else>>
+        <<set _thoughtToPrint = '...'>>
+    <</if>>
+
+    Thought: _thoughtToPrint
+    <hr>
+<</if>>

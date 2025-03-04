@@ -1,0 +1,85 @@
+:: Bedroom [passage_metadata nobr]
+<<PassageMetadata>>{
+    backgroundColor: '#492F1B',
+    backgroundImage: 'images/bedroom.jpeg',
+    thoughts: [
+        {
+            condition: `$time === 'Evening'`,
+            text: 'I feel sleepy...',
+        },
+        {
+            condition: `$time === 'Evening' && $isWorkedToday === true`,
+            text: 'After a whole day of work I need to rest',
+        },
+        {
+            condition: `$time === 'Evening' && $isWatchedTvToday === true`,
+            text: 'Oh, that day was amazing',
+        },
+        {
+            condition: `$time === 'Morning'`,
+            text: 'Let\'s start this day!',
+        },
+        {
+            condition: `$time === 'Morning' && $isTakedShowerToday === false`,
+            text: 'Let\'s take shower!',
+        },
+        {
+            condition: `$time === 'Morning' && $isDrinkedCoffeeToday === false`,
+            text: 'I need coffee to wake up',
+        },
+    ],
+}<</PassageMetadata>>
+
+<h3>Bedroom</h3>
+
+<<if $isCurtainsOpened === false>>
+    <<button "Open the curtains" "Bedroom">>
+        <<set $isCurtainsOpened = true>>
+        <<setPassageMetadataVariable "backgroundColor" "#876848">>
+    <</button>>
+<<else>>
+    <<button "Close the curtains" "Bedroom">>
+        <<set $isCurtainsOpened = false>>
+        <<setPassageMetadataVariable "backgroundColor" "#492F1B">>
+    <</button>>
+<</if>>
+
+<<if $isWatchedTvToday === true || $isWorkedToday === true>>
+    <<button "Sleep" "Bedroom">>
+        <<set $day += 1>>
+        /* It could be written better, but this is just an example, so... */
+        <<if $weekday === 'Monday'>>
+            <<set $weekday = 'Tuesday'>>
+            <<set $isWorkday = true>>
+        <<elseif $weekday === 'Tuesday'>>
+            <<set $weekday = 'Wednesday'>>
+            <<set $isWorkday = true>>
+        <<elseif $weekday === 'Wednesday'>>
+            <<set $weekday = 'Thursday'>>
+            <<set $isWorkday = true>>
+        <<elseif $weekday === 'Thursday'>>
+            <<set $weekday = 'Friday'>>
+            <<set $isWorkday = true>>
+        <<elseif $weekday === 'Friday'>>
+            <<set $weekday = 'Saturday'>>
+            <<set $isWorkday = false>>
+        <<elseif $weekday === 'Saturday'>>
+            <<set $weekday = 'Sunday'>>
+            <<set $isWorkday = false>>
+        <<elseif $weekday === 'Sunday'>>
+            <<set $weekday = 'Monday'>>
+            <<set $isWorkday = true>>
+            <<set $money -= 300>>
+        <</if>>
+        <<set $time = 'Morning'>>
+        <<set $isWorkedToday = false>>
+        <<set $isCurtainsOpened = false>>
+        <<set $isTakedShowerToday = false>>
+        <<set $isDrinkedCoffeeToday = false>>
+        <<set $isWatchedTvToday = false>>
+    <</button>>
+<</if>>
+
+<hr>
+<<button "Go to bathroom" "Bathroom">><</button>>
+<<button "Go to living room" "LivingRoom">><</button>>

@@ -1,0 +1,13 @@
+:: Start [nobr]
+<<set $day = 1>>
+<<set $isWorkday = true>>
+<<set $weekday = 'Monday'>>
+<<set $time = 'Morning'>>
+<<set $money = 100>>
+<<set $isWorkedToday = false>>
+<<set $isCurtainsOpened = false>>
+<<set $isTakedShowerToday = false>>
+<<set $isDrinkedCoffeeToday = false>>
+<<set $isWatchedTvToday = false>>
+
+<<button "Wake up" "Bedroom">><</button>>

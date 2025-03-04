@@ -1,0 +1,30 @@
+:: Office [passage_metadata nobr]
+<<PassageMetadata>>{
+    backgroundColor: '#5F5042',
+    backgroundImage: 'images/office.jpeg',
+    thoughts: [
+        {
+            condition: `$money >= 300 && $isWatchedTvToday === false && $isWorkedToday === false && $isWorkday === true`,
+            text: 'Should I work today?',
+        },
+        {
+            condition: `$isWatchedTvToday === false && $isWorkedToday === false && $isWorkday === false`,
+            text: 'Need to work, I really need money before end of week',
+        },
+    ],
+}<</PassageMetadata>>
+
+<h3>Office</h3>
+
+<<if $isWatchedTvToday === false && $isWorkedToday === false>>
+    <<button "Work" "Office">>
+        <<set $money += 100>>
+        <<set $isWorkedToday = true>>
+        <<set $time = 'Evening'>>
+    <</button>>
+<<else>>
+    Too late to work.
+<</if>>
+
+<hr>
+<<button "Go to living room" "LivingRoom">><</button>>

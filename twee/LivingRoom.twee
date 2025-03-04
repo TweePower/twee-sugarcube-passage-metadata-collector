@@ -1,0 +1,35 @@
+:: LivingRoom [passage_metadata nobr]
+<<PassageMetadata>>{
+    backgroundColor: '#54261F',
+    backgroundImage: 'images/living_room.jpeg',
+    thoughts: [
+        {
+            condition: true,
+            text: 'I love my living room',
+        },
+        {
+            condition: `$money >= 300 && $isWatchedTvToday === false && $isWorkedToday === false && $isWorkday === true`,
+            text: 'Maybe skip work for today?',
+        },
+        {
+            condition: `$isWatchedTvToday === false && $isWorkedToday === false && $isWorkday === false`,
+            text: 'Time to relax and watch something cool!',
+        },
+    ],
+}<</PassageMetadata>>
+
+<h3>Living room</h3>
+
+<<if $isWatchedTvToday === false && $isWorkedToday === false>>
+    <<button "Spend the day watching TV" "LivingRoom">>
+        <<set $isWatchedTvToday = true>>
+        <<set $time = 'Evening'>>
+    <</button>>
+<<else>>
+    Too late to watch TV.
+<</if>>
+
+<hr>
+<<button "Go to badroom" "Bedroom">><</button>>
+<<button "Go to kitchen" "Kitchen">><</button>>
+<<button "Go to office" "Office">><</button>>

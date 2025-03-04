@@ -1,0 +1,50 @@
+sugarcube-2:
+  macros:
+    PassageMetadata:
+      name: PassageMetadata
+      container: true
+      description: |-
+        *Syntax:* `<<PassageMetadata>>{...metadata here...}<</PassageMetadata>>`
+
+        The `<<PassageMetadata>>` add metadata to you passage
+
+        *Usage:*
+        ```
+          <<PassageMetadata>>{
+              backgroundColor: '#54261F',
+              backgroundImage: 'images/living_room.jpeg',
+              thoughts: [
+                  {
+                      condition: true,
+                      text: 'I love my living room',
+                  },
+                  {
+                      condition: `$money >= 300 && $isWatchedTvToday === false && $isWorkedToday === false && $isWorkday === true`,
+                      text: 'Maybe skip work for today?',
+                  },
+                  {
+                      condition: `$isWatchedTvToday === false && $isWorkedToday === false && $isWorkday === false`,
+                      text: 'Time to relax and watch something cool!',
+                  },
+              ],
+          }<</PassageMetadata>>
+        ```
+
+    setPassageMetadataVariable:
+      name: setPassageMetadataVariable
+      description: |-
+        *Syntax:* `<<setPassageMetadataVariable [[some passage name]] "someKey" value>>`
+
+        The `<<setPassageMetadataVariable>>` set passage metadata value
+
+        *Arguments:*
+          * `passageName`: passage name (optional argument, if not provided then set as current passage name).
+          * `key`: passage metadata key.
+          * `value`: new value.
+
+        *Usage:*
+        ```
+          <<setPassageMetadataVariable "backgroundColor" "#54261F">>
+          <<setPassageMetadataVariable [[some passage name]] "backgroundColor" "#54261F">>
+          <<setPassageMetadataVariable "some passage name" "backgroundColor" "#54261F">>
+        ```

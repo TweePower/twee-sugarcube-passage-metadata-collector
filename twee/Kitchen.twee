@@ -1,0 +1,37 @@
+:: Kitchen [passage_metadata nobr]
+<<PassageMetadata>>{
+    backgroundColor: '#914E2B',
+    backgroundImage: 'images/kitchen.jpeg',
+    thoughts: [
+        {
+            condition: true,
+            text: 'I can smell coffee',
+        },
+        {
+            condition: `$isWatchedTvToday === false && $isWorkedToday === false && $isDrinkedCoffeeToday === false`,
+            text: 'Oh, I want coffee right now!',
+        },
+        {
+            condition: `$isDrinkedCoffeeToday === true`,
+            text: 'That coffee was amazing',
+        },
+    ],
+}<</PassageMetadata>>
+
+<h3>Kitchen</h3>
+
+<<if $isWatchedTvToday === false && $isWorkedToday === false>>
+    <<if $isDrinkedCoffeeToday === false>>
+        <<button "Drink coffee" "Kitchen">>
+            <<set $isDrinkedCoffeeToday = true>>
+        <</button>>
+    <<else>>
+        I already drink coffee today
+    <</if>>
+<<else>>
+    Too late to drink coffee
+<</if>>
+
+
+<hr>
+<<button "Go to living room" "LivingRoom">><</button>>

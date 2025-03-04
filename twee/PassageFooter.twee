@@ -1,0 +1,10 @@
+:: PassageFooter [nobr]
+
+<<if passageMetadataApp.isHasPassageMetadata()>>
+    <hr>
+    Current passage metadata:
+    <pre><<print escapeSpecialChars(JSON.stringify(passageMetadataApp.getPassageMetadata().data, null, 4))>></pre>
+<</if>>
+
+<hr>
+<a href="https://github.com/TweePower/twee-sugarcube-passage-metadata-collector">Go to Github</a>

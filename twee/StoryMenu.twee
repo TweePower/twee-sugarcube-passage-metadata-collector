@@ -1,0 +1,13 @@
+:: StoryMenu [nobr]
+<<link [[Main page|Start]]>><</link>>
+<<link "Open debug">>
+	<<run
+		Dialog.setup("Debug");
+		Dialog.wiki("<pre><code>" + (
+			State.variables.passageMetadataState !== undefined
+				? escapeSpecialChars(JSON.stringify(JSON.parse(State.variables.passageMetadataState), null, 4))
+				: 'empty'
+		) + "</code></pre>");
+		Dialog.open();
+	>>
+<</link>>

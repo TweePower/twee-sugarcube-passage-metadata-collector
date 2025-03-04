@@ -1,0 +1,34 @@
+:: Bathroom [passage_metadata nobr]
+<<PassageMetadata>>{
+    backgroundColor: '#677573',
+    backgroundImage: 'images/bathroom.jpeg',
+    thoughts: [
+        {
+            condition: `$time === 'Evening'`,
+            text: 'I feel sleepy...',
+        },
+        {
+            condition: `$time === 'Evening' && $isTakedShowerToday === false`,
+            text: 'It is necessary to take a shower before going to bed',
+        },
+        {
+            condition: `$time === 'Morning' && $isTakedShowerToday === false`,
+            text: 'Let\'s take shower!',
+        },
+        {
+            condition: `$time === 'Morning' && $isTakedShowerToday === true`,
+            text: 'After my morning shower I feel energized.',
+        },
+    ],
+}<</PassageMetadata>>
+
+<h3>Bathroom</h3>
+
+<<if $isTakedShowerToday === false>>
+    <<button "Take shower" "Bathroom">>
+        <<set $isTakedShowerToday = true>>
+    <</button>>
+<</if>>
+
+<hr>
+<<button "Go to badroom" "Bedroom">><</button>>
