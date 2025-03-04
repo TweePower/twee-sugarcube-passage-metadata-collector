@@ -2,6 +2,8 @@
 
 TODO: Write readme
 
+It's core lib for [Random event for Twee/Sugarcube](https://github.com/TweePower/twee-sugarcube-random-events)
+
 [Open example page](https://twee-sugarcube-passage-metadata-collector.nyc3.cdn.digitaloceanspaces.com/index.html)
 
 [Open the example code folder on GitHub](/twee)
