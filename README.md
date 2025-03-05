@@ -1,11 +1,24 @@
-# Passage metadata collector for Twee/Sugarcube
+# Twee SugarCube Passage Metadata Collector
 
-TODO: Write readme
+## Overview
 
-It's core lib for [Random event for Twee/Sugarcube](https://github.com/TweePower/twee-sugarcube-random-events)
+This repository provides a library for collecting metadata about passages in projects using Twee and the SugarCube story format.
 
-[Open example page](https://twee-sugarcube-passage-metadata-collector.nyc3.cdn.digitaloceanspaces.com/index.html)
+This library serves as the core for implementing [random events](https://github.com/TweePower/twee-sugarcube-random-events) in such projects.
 
-[Open the example code folder on GitHub](/twee)
+## Installation & Usage
 
-If you use VSCode with [Twee 3 Language Tools](https://marketplace.visualstudio.com/items?itemName=cyrusfirheir.twee3-language-tools), please check macros confug [t3lt.twee-config.yml](/t3lt.twee-config.yml)
+To use the library, refer to the example code available in the [GitHub repository](https://github.com/TweePower/twee-sugarcube-random-events/tree/main/doc). Additionally, you can check out the [demo page](https://twee-sugarcube-passage-metadata-collector.nyc3.cdn.digitaloceanspaces.com) for a visual demonstration of the library's functionality.
+
+If you're using VSCode with the [Twee 3 Language Tools extension](https://marketplace.visualstudio.com/items?itemName=t3lt.twee3-language-tools), ensure that your macro configuration in `t3lt.twee-config.yml` is properly set up for seamless integration of the library into your project.
+
+## Related Resources
+
+- [SugarCube official repository](https://github.com/tmedwards/sugarcube-2)
+- [SugarCube documentation](https://www.motoslave.net/sugarcube/2/)
+- [Tweego documentation](https://www.motoslave.net/tweego/docs/)
+- [Random event for Twee/Sugarcube](https://github.com/TweePower/twee-sugarcube-random-events)
+
+## License
+
+This project is licensed under the MIT License.
