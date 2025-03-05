@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "author": "tweepower@gmail.com",
-  "types": "./src/type/*",
+  "types": "./dist/*",
   "scripts": {
     "build-prod": "webpack -c webpack.prod.config.js && node ./build/build.js prod",
     "build-dev": "webpack -c webpack.dev.config.js && node ./build/build.js dev",
