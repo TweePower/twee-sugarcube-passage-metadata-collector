@@ -23,7 +23,9 @@ export default class PassageMetadataStateManager {
         for (const passageName in passageMetadataCollection.items) {
             const passageMetadata = passageMetadataCollection.items[passageName];
 
-            state[passageName] = passageMetadata.rewriteData;
+            if (passageMetadata.rewriteData !== null) {
+                state[passageName] = {...passageMetadata.rewriteData};
+            }
         }
 
         this.onBeforeStore.all().forEach((handler) => {
