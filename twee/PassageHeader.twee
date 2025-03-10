@@ -1,7 +1,7 @@
 :: PassageHeader [nobr]
 
 <<script>>
-    var backgroundColor = passageMetadataApp.getPassageMetadataValue('backgroundColor') ?? '#2f2c27';
+    var backgroundColor = passageMetadataApp.getValue('backgroundColor') ?? '#2f2c27';
     $('#ui-bar').css({
         transition: 'background-color 1s ease-in-out',
         backgroundColor: backgroundColor,
@@ -12,7 +12,7 @@
     });
 <</script>>
 
-<<set _backgroundImage = passageMetadataApp.getPassageMetadataValue('backgroundImage')>>
+<<set _backgroundImage = passageMetadataApp.getValue('backgroundImage')>>
 <<if _backgroundImage !== undefined>>
     <img @src="_backgroundImage" style="max-width: 300px;">
 <</if>>

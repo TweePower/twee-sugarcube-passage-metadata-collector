@@ -25,6 +25,7 @@ test('success create run app', async () => {
     expect(passageMetadata).toBeInstanceOf(PassageMetadata);
     expect(passageMetadata?.passageName).toBe('test1');
     expect(passageMetadata?.data).toStrictEqual({
+        passageName: 'test1',
         isEnabled: true,
         type: "goto",
     });

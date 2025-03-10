@@ -1,9 +1,9 @@
 :: PassageFooter [nobr]
 
-<<if passageMetadataApp.isHasPassageMetadata()>>
+<<if passageMetadataApp.has()>>
     <hr>
     Current passage metadata:
-    <pre><<print escapeSpecialChars(JSON.stringify(passageMetadataApp.getPassageMetadata().data, null, 4))>></pre>
+    <pre><<print escapeSpecialChars(JSON.stringify(passageMetadataApp.get().data, null, 4))>></pre>
 <</if>>
 
 <hr>

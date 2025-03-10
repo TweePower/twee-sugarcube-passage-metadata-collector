@@ -82,4 +82,4 @@
 
 <hr>
 <<button "Go to bathroom" "Bathroom">><</button>>
-<<button "Go to living room" "LivingRoom">><</button>>
+<<button "Go to living room" "Living room">><</button>>

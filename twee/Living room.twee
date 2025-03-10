@@ -1,4 +1,4 @@
-:: LivingRoom [passage_metadata nobr]
+:: Living room [passage_metadata nobr]
 <<PassageMetadata>>{
     backgroundColor: '#54261F',
     backgroundImage: 'images/living_room.jpeg',
@@ -21,7 +21,7 @@
 <h3>Living room</h3>
 
 <<if $isWatchedTvToday === false && $isWorkedToday === false>>
-    <<button "Spend the day watching TV" "LivingRoom">>
+    <<button "Spend the day watching TV" "Living room">>
         <<set $isWatchedTvToday = true>>
         <<set $time = 'Evening'>>
     <</button>>

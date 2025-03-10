@@ -2,7 +2,7 @@ import SugarcubeFacade from "./facade/SugarcubeFacade";
 import PassageMetadataCollection from "./PassageMetadataCollection";
 import PassageMetadataCollector from "./PassageMetadataCollector";
 import PassageMetadataError from "./error/PassageMetadataError";
-import PassageMetadataStateManager from "./PassageMetadataStateManager";
+import PassageMetadataStateManager, { PassageMetadataStateType } from "./PassageMetadataStateManager";
 import EventHandlerCollection from "./EventHandlerCollection"
 import { default as initializeMacros } from "./macros/index"
 import PassageMetadata from "./PassageMetadata";
@@ -19,23 +19,23 @@ export default class PassageMetadataApp {
     private _isPassageMetadataWidgetsInitialized = false;
     private _realCurrentPassage: string|null;
 
-    public onBeforeAddMetadata: EventHandlerCollection;
-    public onAfterAddMetadata: EventHandlerCollection;
-    public onBeforeStore: EventHandlerCollection;
-    public onBeforeRestore: EventHandlerCollection;
+    public onBeforeAddMetadata: EventHandlerCollection<{[key: string | number]: any}>;
+    public onAfterAddMetadata: EventHandlerCollection<PassageMetadata>;
+    public onBeforeStore: EventHandlerCollection<PassageMetadataStateType>;
+    public onBeforeRestore: EventHandlerCollection<PassageMetadataStateType>;
 
     constructor(
-        private passageMetadataWidgetName: string = 'PassageMetadata',
-        mode: string = 'byTag',// all
-        modeParams: { filterTag?: string } = { filterTag: 'passage_metadata' }
+        private _passageMetadataWidgetName: string = 'PassageMetadata',
+        private _mode: string = 'byTag',// all
+        private _modeParams: { filterTag?: string } = { filterTag: 'passage_metadata' }
     ) {
         this.sugarcubeFacade = new SugarcubeFacade();
 
         this.passageMetadataCollector = new PassageMetadataCollector(
             this.sugarcubeFacade,
-            this.passageMetadataWidgetName,
-            mode,
-            modeParams
+            _passageMetadataWidgetName,
+            _mode,
+            _modeParams
         );
 
         this.passageMetadataStateManager = new PassageMetadataStateManager(
@@ -45,12 +45,15 @@ export default class PassageMetadataApp {
         // For detail see: https://github.com/tmedwards/sugarcube-2/pull/299
         this._realCurrentPassage = this.sugarcubeFacade.getCurrentPassage();
         $(document).on(':passageinit', (ev) => {
-            this._realCurrentPassage = typeof ev.passage.name === 'string' ? ev.passage.name : ev.passage.title;
+            const passage: any = ev.passage;
+            this._realCurrentPassage = typeof passage.name === 'string' ? passage.name : passage.title;
         });
 
         $(document).on(':passagestart', () => {
             // it necesarry to do on ':passagestart' event, becasue here Sugarcube varialbes already loaded
             if (this._isPassageMetadataAppInitialized === false) {
+                this._isPassageMetadataAppInitialized = true;
+
                 this.collect();
                 this.initWidgets();
             }
@@ -64,19 +67,31 @@ export default class PassageMetadataApp {
         this.onBeforeRestore = this.passageMetadataStateManager.onBeforeRestore;
     }
 
-    get isPassageMetadataAppInitialized(): boolean {
+    get passageMetadataWidgetName(): string {
+        return this._passageMetadataWidgetName;
+    }
+
+    get mode(): string {
+        return this._mode;
+    }
+
+    get modeParams(): { filterTag?: string } {
+        return {...this._modeParams};
+    }
+
+    get isInitialized(): boolean {
         return this._isPassageMetadataAppInitialized;
     }
 
-    get isPassageMetadataCollected(): boolean {
+    get isCollected(): boolean {
         return this._isPassageMetadataCollected;
     }
 
-    get isPassageStateLoaded(): boolean {
+    get isStateLoaded(): boolean {
         return this._isPassageStateLoaded;
     }
 
-    get isPassageMetadataWidgetsInitialized(): boolean {
+    get isWidgetsInitialized(): boolean {
         return this._isPassageMetadataWidgetsInitialized;
     }
 
@@ -99,7 +114,7 @@ export default class PassageMetadataApp {
             this.passageMetadataCollection = this.passageMetadataCollector.collect();
         } catch (error) {
             if (error instanceof PassageMetadataError) {
-                error.message += " (" + Object.keys(error.scope).map(scopeKey => `${scopeKey}: ${error.scope[scopeKey]}`).join(', ');
+                error.message += " (" + Object.keys(error.scope).map(scopeKey => `${scopeKey}: ${error.scope[scopeKey]}`).join(', ') + ')';
             }
 
             throw error;
@@ -132,7 +147,7 @@ export default class PassageMetadataApp {
         this._isPassageMetadataWidgetsInitialized = true;
         const passageMetadataApp = this;
 
-        this.sugarcubeFacade.addMacros(this.passageMetadataWidgetName, {
+        this.sugarcubeFacade.addMacros(this._passageMetadataWidgetName, {
             handler: function () {
                 return this.error('Passage metadata was not processed, please check passage tags');
             }
@@ -145,8 +160,8 @@ export default class PassageMetadataApp {
         this.passageMetadataStateManager.store(this.passageMetadataCollection);
     }
 
-    public isHasPassageMetadata(passageName: string | null = null): boolean {
-        if (this.isPassageMetadataCollected === false) throw new Error('Passage matadata was not collected');
+    public has(passageName: string | null = null): boolean {
+        if (this.isCollected === false) throw new Error('Passage matadata was not collected');
 
         if (passageName === null) {
             passageName = this._realCurrentPassage;
@@ -155,8 +170,8 @@ export default class PassageMetadataApp {
         return this.passageMetadataCollection.has(passageName);
     }
 
-    public getPassageMetadata(passageName: string | null = null): PassageMetadata | null {
-        if (this.isPassageMetadataCollected === false) throw new Error('Passage matadata was not collected');
+    public find(passageName: string | null = null): PassageMetadata | null {
+        if (this.isCollected === false) throw new Error('Passage matadata was not collected');
 
         if (passageName === null) {
             passageName = this._realCurrentPassage;
@@ -165,9 +180,18 @@ export default class PassageMetadataApp {
         return this.passageMetadataCollection.find(passageName);
     }
 
-    public getPassageMetadataValue(passageNameOrKey: string | number, key: string | number | null = null): any {
-        if (this.isPassageMetadataCollected === false) throw new Error('Passage matadata was not collected');
+    public get(passageName: string | null = null): PassageMetadata | null {
+        if (this.isCollected === false) throw new Error('Passage matadata was not collected');
 
+        if (passageName === null) {
+            passageName = this._realCurrentPassage;
+        }
+
+        return this.passageMetadataCollection.get(passageName);
+    }
+
+    public getValue(passageNameOrKey: string | number, key: string | number | null = null): any {
+        if (this.isCollected === false) throw new Error('Passage matadata was not collected');
 
         let passageName = this._realCurrentPassage;
         let valueKey = null;
@@ -175,7 +199,7 @@ export default class PassageMetadataApp {
             valueKey = passageNameOrKey;
         } else {
             if (typeof passageNameOrKey !== 'string') {
-                throw new TypeError(`${this.constructor.name}.getPassageMetadataValue: Invalid type for argument 'passageNameOrKey'. `
+                throw new TypeError(`${this.constructor.name}.getValue: Invalid type for argument 'passageNameOrKey'. `
                     + `Expected string, got ${typeof passageNameOrKey}.`);
             }
 

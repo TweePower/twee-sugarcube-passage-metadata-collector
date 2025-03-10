@@ -1,8 +1,8 @@
 import PassageMetadata from "../../src/PassageMetadata";
 import PassageMetadataCollection from "../../src/PassageMetadataCollection";
 
-const passageMetadataFixture1 = new PassageMetadata('test1', { name: 'test1', foo: 'bar' });
-const passageMetadataFixture2 = new PassageMetadata('test2', { name: 'test2', foo: 'bar' });
+const passageMetadataFixture1 = new PassageMetadata({ passageName: 'test1', foo: 'bar' });
+const passageMetadataFixture2 = new PassageMetadata({ passageName: 'test2', foo: 'bar' });
 const passageMetadataCollection = new PassageMetadataCollection();
 passageMetadataCollection.add(passageMetadataFixture1);
 
@@ -45,7 +45,7 @@ test('success update data', async () => {
     passageMetadata.setValue('foo', 'baz');
 
     expect(passageMetadataCollection.get('test1').data).toMatchObject({
-        name: 'test1',
-        foo: 'baz'
+        foo: 'baz',
+        passageName: 'test1',
     });
 });

@@ -1,6 +1,7 @@
 import PassageMetadata from "../../src/PassageMetadata";
 
 const defautlData = {
+    passageName: 'test1',
     param: 'foo',
     2: 'bar',
     bool: true,
@@ -10,7 +11,7 @@ const defautlData = {
 };
 
 test('success create passage metadata with different data types', async () => {
-    const passageMetadata = new PassageMetadata('test1', defautlData);
+    const passageMetadata = new PassageMetadata(defautlData);
 
     expect(passageMetadata).toBeInstanceOf(PassageMetadata);
     expect(passageMetadata.passageName).toEqual('test1');
@@ -20,7 +21,7 @@ test('success create passage metadata with different data types', async () => {
 });
 
 test('success set value', async () => {
-    const passageMetadata = new PassageMetadata('test1', defautlData);
+    const passageMetadata = new PassageMetadata(defautlData);
 
     passageMetadata.setValue('param', 'bar');
     passageMetadata.setValue('bool', false);
@@ -42,7 +43,7 @@ test('success set value', async () => {
 });
 
 test('success clean rewrite data', async () => {
-    const passageMetadata = new PassageMetadata('test1', defautlData);
+    const passageMetadata = new PassageMetadata(defautlData);
 
     passageMetadata.setValue('param', 'bar');
     passageMetadata.setValue('bool', false);

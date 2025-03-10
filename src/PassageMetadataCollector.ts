@@ -6,8 +6,8 @@ import EventHandlerCollection from "./EventHandlerCollection"
 
 export default class PassageMetadataCollector {
     private passageMetadataRegex: RegExp;
-    public onBeforeAddMetadata = new EventHandlerCollection();
-    public onAfterAddMetadata = new EventHandlerCollection();
+    public onBeforeAddMetadata = new EventHandlerCollection<{[key: string | number]: any}>();
+    public onAfterAddMetadata = new EventHandlerCollection<PassageMetadata>();
 
     constructor(
         private sugarcubeFacade: SugarcubeFacade,
@@ -51,29 +51,35 @@ export default class PassageMetadataCollector {
         }
 
         const passageMetadataCollection = new PassageMetadataCollection();
-        passages.forEach((passage) => {
+        passages.forEach((passage: {[key: string]: any}) => {
+            const passageName = typeof passage.name === 'string' ? passage.name : passage.title;
             this.passageMetadataRegex.lastIndex = 0;
             const passageMetadataRegexResult = this.passageMetadataRegex.exec(passage.element.textContent);
 
             if (this.mode === 'byTag' && passageMetadataRegexResult === null) {
-                throw new PassageMetadataError(`Passage metadata not found in ${passage.title}`);
+                throw new PassageMetadataError(`Passage metadata not found in ${passageName}`);
             }
 
             try {
-                const passageMetadataEvalResult = this.createPassageMetadataObject(passageMetadataRegexResult[1]);
+                let passageMetadataEvalResult: {[key: string]: any} = this.createPassageMetadataObject(passageMetadataRegexResult[1]);
+
+                passageMetadataEvalResult = {
+                    passageName: passageName,
+                    ...passageMetadataEvalResult,
+                };
 
                 this.onBeforeAddMetadata.all().forEach((handler) => {
                     handler(passageMetadataEvalResult);
                 });
 
-                const passageMetadata = new PassageMetadata(passage.title, passageMetadataEvalResult)
+                const passageMetadata = new PassageMetadata(passageMetadataEvalResult)
                 passageMetadataCollection.add(passageMetadata);
 
                 this.onAfterAddMetadata.all().forEach((handler) => {
                     handler(passageMetadata);
                 });
             } catch (error) {
-                throw PassageMetadataError.fromPreviousError(error, {'passage': passage.title});
+                throw PassageMetadataError.fromPreviousError(error, {'passageName': passageName});
             }
 
             // remove definition from passage

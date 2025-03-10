@@ -3,7 +3,7 @@ import PassageMetadata from "../../src/PassageMetadata";
 import PassageMetadataCollection from "../../src/PassageMetadataCollection";
 import PassageMetadataStateManager from "../../src/PassageMetadataStateManager";
 
-const passageMetadataFixture1 = new PassageMetadata('test1', { name: 'test1', foo: 'bar' });
+const passageMetadataFixture1 = new PassageMetadata({ passageName: 'test1', foo: 'bar' });
 const passageMetadataCollection = new PassageMetadataCollection();
 passageMetadataCollection.add(passageMetadataFixture1);
 const sugarcubeFacade = new SugarcubeFacade();
@@ -22,7 +22,7 @@ test('success restore values from history', async () => {
     expect(passageMetadataCollection.has('test1')).toBeTruthy();
 
     expect(passageMetadataCollection.get('test1').data).toMatchObject({
-        name: 'test1',
+        passageName: 'test1',
         foo: 'baz',
         bar: 'boo',
     });
@@ -31,7 +31,7 @@ test('success restore values from history', async () => {
         bar: 'boo',
     });
     expect(passageMetadataCollection.get('test1').originData).toMatchObject({
-        name: 'test1',
+        passageName: 'test1',
         foo: 'bar',
     });
 });
@@ -73,7 +73,7 @@ test('success store and restore', async () => {
     expect(newPassageMetadataCollection.has('test1')).toBeTruthy();
 
     expect(newPassageMetadataCollection.get('test1').data).toMatchObject({
-        name: 'test1',
+        passageName: 'test1',
         foo: 'baz',
         bar: 'boo',
     });
@@ -82,7 +82,7 @@ test('success store and restore', async () => {
         bar: 'boo',
     });
     expect(newPassageMetadataCollection.get('test1').originData).toMatchObject({
-        name: 'test1',
+        passageName: 'test1',
         foo: 'bar',
     });
 });

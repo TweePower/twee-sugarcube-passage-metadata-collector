@@ -9,25 +9,22 @@ export default class PassageMetadata {
     private _originData: DataType;
     private _rewriteData: DataType | null;
 
-    constructor(
-        private _passageName: string,
-        _data: DataType,
-    ) {
-        if (typeof _passageName !== 'string') {
-            throw new PassageMetadataError(`Invalid passage name (expected: string, actual: ${typeof _passageName})`);
+    constructor(data: DataType) {
+        if (typeof data !== 'object' || Array.isArray(data) || data === null) {
+            throw new PassageMetadataError(`Invalid passage metadata (expected: object, actual: ${typeof data})`);
         }
 
-        if (typeof _data !== 'object' || Array.isArray(_data) || _data === null) {
-            throw new PassageMetadataError(`Invalid passage metadata (expected: object, actual: ${typeof _data})`);
+        if (typeof data.passageName !== 'string') {
+            throw new PassageMetadataError(`Invalid passage name (expected: string, actual: ${typeof data.passageName})`);
         }
 
-        this._data = { ..._data };
-        this._originData = { ..._data };
+        this._data = { ...data };
+        this._originData = { ...data };
         this._rewriteData = null;
     }
 
     get passageName(): string {
-        return this._passageName;
+        return this._data.passageName;
     }
 
     get data(): DataType {

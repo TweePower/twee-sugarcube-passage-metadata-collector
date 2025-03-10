@@ -7,9 +7,7 @@
     "sourceMap": true,
     "allowJs": true,
     "moduleResolution": "node",
-    "esModuleInterop": true,
-    "composite": true,
-    "declarationMap": true
+    "esModuleInterop": true
   },
   "include": [
     "src/**/*",

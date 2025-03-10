@@ -23,7 +23,7 @@ export default (passageMetadataApp: PassageMetadataApp, sugarcubeFacade: Sugarcu
                     return this.error(`Invalid type for second argument: expected string or number, but recived ${typeof this.args[1]}`);
                 }
 
-                passageMetadata = passageMetadataApp.getPassageMetadata(passageName);
+                passageMetadata = passageMetadataApp.get(passageName);
                 key = this.args[1];
                 value = this.args[2];
             } else {
@@ -31,7 +31,7 @@ export default (passageMetadataApp: PassageMetadataApp, sugarcubeFacade: Sugarcu
                     return this.error(`Invalid type for second argument: expected string or number, but recived ${typeof this.args[0]}`);
                 }
 
-                passageMetadata = passageMetadataApp.getPassageMetadata();
+                passageMetadata = passageMetadataApp.get();
                 key = this.args[0];
                 value = this.args[1];
             }

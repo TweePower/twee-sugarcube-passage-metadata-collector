@@ -1,7 +1,7 @@
-export default class EventHandlerCollection {
-    private handlers: ((item: any) => {})[] = [];
+export default class EventHandlerCollection<callbackArgumentType> {
+    private handlers: ((item: callbackArgumentType) => void)[] = [];
 
-    public add(handler: () => {}): void {
+    public add(handler: (item: callbackArgumentType) => void): void {
         this.handlers.push(handler);
     }
 
@@ -13,7 +13,7 @@ export default class EventHandlerCollection {
         return this.handlers.length;
     }
 
-    public all(): ((item: any) => {})[] {
+    public all(): ((item: callbackArgumentType) => void)[] {
         return this.handlers;
     }
 }

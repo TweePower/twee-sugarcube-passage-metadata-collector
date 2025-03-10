@@ -9,8 +9,8 @@ export type PassageMetadataStateType = {
 };
 
 export default class PassageMetadataStateManager {
-    public onBeforeStore = new EventHandlerCollection();
-    public onBeforeRestore = new EventHandlerCollection();
+    public onBeforeStore = new EventHandlerCollection<PassageMetadataStateType>();
+    public onBeforeRestore = new EventHandlerCollection<PassageMetadataStateType>();
 
     constructor(
         private sugarcubeFacade: SugarcubeFacade,

@@ -39,10 +39,12 @@ test('success create PassageMetadata', async () => {
 
     expect(passageMetadata.passageName).toEqual('test1');
     expect(passageMetadata.data).toMatchObject({
+        passageName: 'test1',
         isEnabled: true,
         type: "goto",
     });
     expect(passageMetadata.originData).toMatchObject({
+        passageName: 'test1',
         isEnabled: true,
         type: "goto",
     });
