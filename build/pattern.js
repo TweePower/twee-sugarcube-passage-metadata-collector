@@ -3,7 +3,6 @@
 const passageMetadataWidgetName = 'PassageMetadata';
 const mode = 'byTag';
 const modeParams = { filterTag: 'passage_metadata' };
-const debugLevel = 3;
 
 (function () {
     'use strict';
@@ -33,7 +32,6 @@ const debugLevel = 3;
         passageMetadataWidgetName,
         mode,
         modeParams,
-        debugLevel,
     );
 
     $(document).on(':called_backward', function() {

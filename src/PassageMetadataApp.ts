@@ -170,6 +170,12 @@ export default class PassageMetadataApp {
         return this.passageMetadataCollection.has(passageName);
     }
 
+    public previousHas(): boolean {
+        if (this.isCollected === false) throw new Error('Passage matadata was not collected');
+
+        return this.passageMetadataCollection.has(previous());
+    }
+
     public find(passageName: string | null = null): PassageMetadata | null {
         if (this.isCollected === false) throw new Error('Passage matadata was not collected');
 
