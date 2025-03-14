@@ -1,3 +1,4 @@
+import clone from "clone";
 import PassageMetadata from "./PassageMetadata";
 import PassageMetadataCollection from "./PassageMetadataCollection";
 import PassageMetadataError from "./error/PassageMetadataError";
@@ -65,7 +66,7 @@ export default class PassageMetadataCollector {
 
                 passageMetadataEvalResult = {
                     passageName: passageName,
-                    ...passageMetadataEvalResult,
+                    ...clone(passageMetadataEvalResult),
                 };
 
                 this.onBeforeAddMetadata.all().forEach((handler) => {

@@ -1,3 +1,4 @@
+import clone from "clone";
 import PassageMetadataError from "./error/PassageMetadataError";
 
 type DataType = {
@@ -18,8 +19,8 @@ export default class PassageMetadata {
             throw new PassageMetadataError(`Invalid passage name (expected: string, actual: ${typeof data.passageName})`);
         }
 
-        this._data = { ...data };
-        this._originData = { ...data };
+        this._data = clone(data);
+        this._originData = clone(data);
         this._rewriteData = null;
     }
 
@@ -57,6 +58,6 @@ export default class PassageMetadata {
 
     public reset(): void {
         this._rewriteData = null;
-        this._data = { ...this._originData };
+        this._data = clone(this._originData);
     }
 }

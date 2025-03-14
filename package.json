@@ -13,10 +13,12 @@
     "test": "jest --coverage --collectCoverageFrom='src/**/*.ts'"
   },
   "devDependencies": {
+    "@types/clone": "^2.1.4",
     "@types/jest": "^27.5.2",
     "@types/jquery": "^3.5.32",
     "@types/twine-sugarcube": "^2.36.11",
     "@typescript-eslint/eslint-plugin": "^7.3.0",
+    "clone": "^2.1.2",
     "eslint": "^8.57.0",
     "jest": "^27.0.6",
     "jquery": "^3.7.1",

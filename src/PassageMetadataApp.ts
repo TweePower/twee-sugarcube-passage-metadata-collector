@@ -76,7 +76,7 @@ export default class PassageMetadataApp {
     }
 
     get modeParams(): { filterTag?: string } {
-        return {...this._modeParams};
+        return clone(this._modeParams);
     }
 
     get isInitialized(): boolean {

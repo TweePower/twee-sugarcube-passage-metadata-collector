@@ -1,3 +1,4 @@
+import clone from "clone";
 import SugarcubeFacade from "./facade/SugarcubeFacade";
 import PassageMetadataCollection from "./PassageMetadataCollection";
 import EventHandlerCollection from "./EventHandlerCollection"
@@ -24,7 +25,7 @@ export default class PassageMetadataStateManager {
             const passageMetadata = passageMetadataCollection.items[passageName];
 
             if (passageMetadata.rewriteData !== null) {
-                state[passageName] = {...passageMetadata.rewriteData};
+                state[passageName] = clone(passageMetadata.rewriteData);
             }
         }
 
