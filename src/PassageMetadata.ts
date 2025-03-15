@@ -1,4 +1,5 @@
 import clone from "clone";
+import equal from "fast-deep-equal";
 import PassageMetadataError from "./error/PassageMetadataError";
 
 type DataType = {
@@ -39,7 +40,7 @@ export default class PassageMetadata {
 
         this._rewriteData[key] = value;
 
-        if (this._rewriteData[key] === this._originData[key]) {
+        if (equal(this._rewriteData[key], this._originData[key])) {
             delete this._rewriteData[key];
         }
 
