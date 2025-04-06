@@ -35,14 +35,16 @@ export default class PassageMetadataStateManager {
         this.sugarcubeFacade.saveVariable(this.sugarcubeHistoryVariableName, this.serialize(state));
     }
 
-    public restore(passageMetadataCollection: PassageMetadataCollection): void {
+    public restore(passageMetadataCollection: PassageMetadataCollection): boolean {
         const historyData = this.sugarcubeFacade.getVariable(this.sugarcubeHistoryVariableName);
 
-        if (typeof historyData !== 'string') {
-            return;
-        }
+        let isHistoryDataFound = false;
+        let state: PassageMetadataStateType = {};
 
-        const state = this.deserialize(historyData);
+        if (typeof historyData === 'string') {
+            state = this.deserialize(historyData);
+            isHistoryDataFound = true;
+        }
 
         // reset before fill from history
         for (const passageName in passageMetadataCollection.items) {
@@ -62,6 +64,8 @@ export default class PassageMetadataStateManager {
                 passageMetadataCollection.get(passageName).setValue(key, passageRewriteMetadata[key]);
             }
         }
+
+        return isHistoryDataFound;
     }
 
     private deserialize(data: string): PassageMetadataStateType {

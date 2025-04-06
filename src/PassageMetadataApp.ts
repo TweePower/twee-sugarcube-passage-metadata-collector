@@ -126,10 +126,10 @@ export default class PassageMetadataApp {
             return;
         }
 
-        this._isPassageStateLoaded = true;
-
         try {
-            this.passageMetadataStateManager.restore(this.passageMetadataCollection);
+            if (this.passageMetadataStateManager.restore(this.passageMetadataCollection)) {
+                this._isPassageStateLoaded = true;
+            }
         } catch (error) {
             if (error instanceof PassageMetadataError) {
                 error.message += " (" + Object.keys(error.scope).map(scopeKey => `${scopeKey}: ${error.scope[scopeKey]}`).join(', ');
@@ -157,6 +157,7 @@ export default class PassageMetadataApp {
     }
 
     public storeState(): void {
+        this._isPassageStateLoaded = true;
         this.passageMetadataStateManager.store(this.passageMetadataCollection);
     }
 
