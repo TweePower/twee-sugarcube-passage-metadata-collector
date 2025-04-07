@@ -12,7 +12,7 @@ To use the library, refer to the example code available in the [GitHub repositor
 
 Additionally, you can check out the [demo page](https://twee-sugarcube-passage-metadata-collector.nyc3.cdn.digitaloceanspaces.com/index.html) for a visual demonstration of the library's functionality.
 
-If you're using VSCode with the [Twee 3 Language Tools extension](https://marketplace.visualstudio.com/items?itemName=t3lt.twee3-language-tools), ensure that your macro configuration in `t3lt.twee-config.yml` is properly set up for seamless integration of the library into your project.
+If you're using VSCode with the [Twee 3 Language Tools extension](https://marketplace.visualstudio.com/items?itemName=t3lt.twee3-language-tools), simply copy `'passage-metadata-collector.twee-config.yml'` into your project to automatically apply the correct macro configuration.
 
 ## Related Resources
 
